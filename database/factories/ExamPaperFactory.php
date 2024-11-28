@@ -20,11 +20,12 @@ class ExamPaperFactory extends Factory
             'type' => $this->faker->randomElement(ExamPaperType::cases()),
             'status' => $this->faker->randomElement(ExamPaperStatus::cases()),
             'description' => $this->faker->text(),
-            'file_path' => $this->faker->word(),
+            'file_path' => $this->faker->filePath(),
+            'conducted_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 
-            'subject_id' => Subject::factory(),
+            'subject_id' => Subject::inRandomOrder()->first()->id,
         ];
     }
 }

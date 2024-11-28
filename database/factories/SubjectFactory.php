@@ -31,7 +31,7 @@ class SubjectFactory extends Factory
                 'Data Structure and Algorithm',
                 'Basic Electronics',
             ]),
-            'code' => $this->faker->word(),
+            'code' => $this->faker->slug(),
             'description' => $this->faker->text(),
             'status' => $this->faker->randomElement(SubjectStatus::cases()),
             'semester' => $this->faker->randomDigitNotZero(),

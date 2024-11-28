@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\UserRoles;
 use App\Enums\UserStatus;
 use App\Models\Branch;
+use App\Models\ExamPaper;
 use App\Models\Subject;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -62,5 +63,7 @@ class DatabaseSeeder extends Seeder
 
         // Create fake 50 subjects
         Subject::factory(50)->create();
+
+        ExamPaper::factory(100)->create();
     }
 }
