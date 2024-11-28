@@ -49,6 +49,7 @@ class ExamPaperResource extends Resource
                             })
                             ->getOptionLabelUsing(function ($value) {
                                 $subject = \App\Models\Subject::find($value);
+
                                 return "{$subject->branch->name} - {$subject->name}";
                             }),
 
