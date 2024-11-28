@@ -33,7 +33,25 @@ class ExamPaperResource extends Resource
                         Forms\Components\Select::make('subject_id')
                             ->relationship('subject', 'name')
                             ->required()
-                            ->searchable(),
+                            ->searchable()
+                            ->getSearchResultsUsing(function (string $search) {
+                                return \App\Models\Subject::query()
+                                    ->where('name', 'like', "%{$search}%")
+                                    ->orWhereHas('branch', function ($query) use ($search) {
+                                        $query->where('name', 'like', "%{$search}%");
+                                    })
+                                    ->get()
+                                    ->mapWithKeys(function ($subject) {
+                                        return [
+                                            $subject->id => "{$subject->name} - {$subject->branch->name} - {$subject->semester} Semester",
+                                        ];
+                                    });
+                            })
+                            ->getOptionLabelUsing(function ($value) {
+                                $subject = \App\Models\Subject::find($value);
+                                return "{$subject->branch->name} - {$subject->name}";
+                            }),
+
                         Forms\Components\ToggleButtons::make('status')->required()->inline()->options(ExamPaperStatus::class)->default(ExamPaperStatus::ACTIVE),
                         Forms\Components\DatePicker::make('conducted_at')->required(),
                         Forms\Components\RichEditor::make('description')->nullable()->columnSpan(2),
